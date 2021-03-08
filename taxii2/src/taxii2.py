@@ -63,7 +63,7 @@ class Taxii2Connector:
         )
 
         self.interval = get_config_variable(
-            "TAXII2_INTERVAL", ["taxii2", "interval"], config, True
+            "TAXII2_INTERVAL", ["taxii2", "interval"], config, True, 1
         )
 
         self.update_existing_data = get_config_variable(
@@ -111,7 +111,6 @@ class Taxii2Connector:
             self.server.refresh()
             timestamp = int(time.time())
             if self.first_run:
-                last_run = None
                 self.helper.log_info("Connector has never run")
             else:
                 last_run = datetime.utcfromtimestamp(
@@ -154,7 +153,11 @@ class Taxii2Connector:
             else:
                 try:
                     coll = self._get_collection(root, coll_title)
+<<<<<<< HEAD
                 except TAXIIServiceException as err:
+=======
+                except TAXIIServiceException:
+>>>>>>> upstream/master
                     self.helper.log_error(
                         f"Error searching for  collection {coll_title} in API Root {root.title}"
                     )
@@ -192,7 +195,11 @@ class Taxii2Connector:
         """
         Polls a specified collection in a specified API root
         Args:
+<<<<<<< HEAD
             colllection (taxii2client.v2*.Collection: THe Collection to poll
+=======
+            collection (taxii2client.v2*.Collection: THe Collection to poll
+>>>>>>> upstream/master
         """
 
         filters = {}
@@ -263,4 +270,4 @@ if __name__ == "__main__":
         CONNECTOR = Taxii2Connector()
         CONNECTOR.run()
     except Exception as e:
-        raise (e)
+        raise e
